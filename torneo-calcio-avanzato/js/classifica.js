@@ -55,13 +55,15 @@ function updateClassifica(squadreDaMostrare = squadre) {
     const tbody = document.getElementById('classifica-body');
     tbody.innerHTML = '';
 
+    // Calcola i punti per ogni squadra
     squadreDaMostrare.forEach(squadra => {
+        const punti = (squadra.vittorie * 3) + (squadra.pareggi * 1);
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-gray-700 transition-colors';
         tr.innerHTML = `
             <td class="text-center font-bold">${squadra.posizione}</td>
             <td class="font-medium">${squadra.nome}</td>
-            <td class="text-center font-bold">${squadra.punti}</td>
+            <td class="text-center font-bold">${punti}</td>
             <td class="text-center">${squadra.partiteGiocate}</td>
             <td class="text-center text-green-400">${squadra.vittorie}</td>
             <td class="text-center text-yellow-400">${squadra.pareggi}</td>
@@ -78,13 +80,24 @@ function updateClassifica(squadreDaMostrare = squadre) {
 
 // Funzione per aggiornare le statistiche
 function updateStats() {
-    const totalGoals = squadre.reduce((sum, squadra) => sum + squadra.golFatti, 0);
-    const totalMatches = squadre.reduce((sum, squadra) => sum + squadra.partiteGiocate, 0) / 2;
-    const avgGoals = (totalGoals / totalMatches).toFixed(2);
+    // Trova la squadra con più punti
+    const primaSquadra = squadre.reduce((prev, current) => 
+        (prev.punti > current.punti) ? prev : current
+    );
 
-    document.getElementById('total-goals').textContent = totalGoals;
-    document.getElementById('avg-goals').textContent = avgGoals;
-    document.getElementById('total-matches').textContent = totalMatches;
+    // Trova la squadra con più gol fatti
+    const migliorAttacco = squadre.reduce((prev, current) => 
+        (prev.golFatti > current.golFatti) ? prev : current
+    );
+
+    // Trova la squadra con meno gol subiti
+    const migliorDifesa = squadre.reduce((prev, current) => 
+        (prev.golSubiti < current.golSubiti) ? prev : current
+    );
+
+    document.getElementById('first-team').textContent = primaSquadra.nome;
+    document.getElementById('best-attack').textContent = migliorAttacco.nome;
+    document.getElementById('best-defense').textContent = migliorDifesa.nome;
 }
 
 // Funzione per filtrare le squadre

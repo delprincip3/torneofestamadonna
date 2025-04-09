@@ -58,17 +58,18 @@ function updateMarcatori() {
 
 // Funzione per aggiornare le statistiche
 function updateStats() {
+    // Calcola le statistiche totali
     const totalGoals = marcatori.reduce((sum, m) => sum + m.gol, 0);
     const totalMatches = marcatori.reduce((sum, m) => sum + m.partite, 0);
-    const avgGoals = totalGoals / totalMatches;
-
+    const avgGoals = totalMatches > 0 ? totalGoals / totalMatches : 0;
+    
+    // Aggiorna le statistiche
     document.getElementById('total-goals').textContent = totalGoals;
     document.getElementById('avg-goals').textContent = avgGoals.toFixed(1);
     
     // Aggiorna il capocannoniere
     const topScorer = marcatori[0];
-    document.getElementById('top-scorer').textContent = topScorer.nome;
-    document.getElementById('top-scorer-goals').textContent = `${topScorer.gol} gol`;
+    document.getElementById('top-scorer').textContent = topScorer ? `${topScorer.nome} (${topScorer.gol} gol)` : '-';
 }
 
 // Funzione per filtrare i marcatori

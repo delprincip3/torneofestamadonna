@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torneo Calcio - Inserisci Risultato</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Inserisci Risultato</h1>
+            <button id="logout-btn" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                <i class="fas fa-sign-out-alt mr-2"></i>
+                Logout
+            </button>
+        </div>
+
+        <form id="result-form" class="max-w-2xl mx-auto space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div>
+                        <label for="home-team" class="block text-sm font-medium mb-2">Squadra Casa</label>
+                        <select id="home-team" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none" required>
+                            <option value="">Seleziona squadra</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="home-score" class="block text-sm font-medium mb-2">Gol Casa</label>
+                        <input type="number" id="home-score" min="0" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none" required>
+                    </div>
+                    <div id="home-scorers" class="space-y-2">
+                        <h3 class="text-lg font-bold">Marcatori Casa</h3>
+                        <div id="home-scorers-container" class="space-y-2">
+                            <!-- I marcatori verranno aggiunti qui dinamicamente -->
+                        </div>
+                        <button type="button" onclick="addScorer('home')" class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors text-sm">
+                            <i class="fas fa-plus mr-1"></i>
+                            Aggiungi Marcatore
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label for="away-team" class="block text-sm font-medium mb-2">Squadra Ospite</label>
+                        <select id="away-team" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none" required>
+                            <option value="">Seleziona squadra</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="away-score" class="block text-sm font-medium mb-2">Gol Ospite</label>
+                        <input type="number" id="away-score" min="0" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none" required>
+                    </div>
+                    <div id="away-scorers" class="space-y-2">
+                        <h3 class="text-lg font-bold">Marcatori Ospite</h3>
+                        <div id="away-scorers-container" class="space-y-2">
+                            <!-- I marcatori verranno aggiunti qui dinamicamente -->
+                        </div>
+                        <button type="button" onclick="addScorer('away')" class="px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors text-sm">
+                            <i class="fas fa-plus mr-1"></i>
+                            Aggiungi Marcatore
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-4">
+                <button type="button" onclick="window.location.href='index.html'" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                    Annulla
+                </button>
+                <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+                    Salva Risultato
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Link Utili</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-primary">Regolamento</a></li>
+                        <li><a href="#" class="hover:text-primary">FAQ</a></li>
+                        <li><a href="#" class="hover:text-primary">Contatti</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contatti</h3>
+                    <ul class="space-y-2">
+                        <li><i class="fas fa-envelope mr-2"></i> info@torneocalcio.it</li>
+                        <li><i class="fas fa-phone mr-2"></i> +39 123 456 7890</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> Via del Torneo, 123</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Seguici</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl hover:text-primary"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-primary"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-primary"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-gray-400">
+                <p>&copy; 2024 Torneo Calcio. Tutti i diritti riservati.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/storage.js"></script>
+    <script>
+        // Verifica autenticazione
+        if (!isAuthenticated()) {
+            window.location.href = 'login.html';
+        }
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            logout();
+            window.location.href = 'login.html';
+        });
+
+        // Carica le squadre nei select
+        function loadTeams() {
+            const homeTeamSelect = document.getElementById('home-team');
+            const awayTeamSelect = document.getElementById('away-team');
+            const teams = loadData('teams') || [];
+
+            // Pulisci i select
+            homeTeamSelect.innerHTML = '<option value="">Seleziona squadra</option>';
+            awayTeamSelect.innerHTML = '<option value="">Seleziona squadra</option>';
+
+            // Aggiungi le squadre
+            teams.forEach(team => {
+                const option = document.createElement('option');
+                option.value = team.id;
+                option.textContent = team.name;
+                homeTeamSelect.appendChild(option.cloneNode(true));
+                awayTeamSelect.appendChild(option.cloneNode(true));
+            });
+        }
+
+        // Funzione per aggiungere un marcatore
+        function addScorer(team) {
+            const container = document.getElementById(`${team}-scorers-container`);
+            const teamId = document.getElementById(`${team}-team`).value;
+            const teams = loadData('teams') || [];
+            const teamData = teams.find(t => t.id === teamId);
+
+            if (!teamData) return;
+
+            const scorerRow = document.createElement('div');
+            scorerRow.className = 'flex items-center gap-2 bg-gray-700 p-3 rounded-lg';
+            scorerRow.innerHTML = `
+                <select name="scorer" class="flex-grow px-3 py-2 rounded-lg bg-gray-600 border border-gray-500 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none" required>
+                    <option value="">Seleziona giocatore</option>
+                    ${teamData.players.map(player => `
+                        <option value="${player.id}">${player.number ? `${player.number} - ` : ''}${player.name}</option>
+                    `).join('')}
+                </select>
+                <button type="button" onclick="removeScorer(this)" class="px-2 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            container.appendChild(scorerRow);
+        }
+
+        // Funzione per rimuovere un marcatore
+        function removeScorer(button) {
+            button.closest('div').remove();
+        }
+
+        // Event listener per il form
+        document.getElementById('result-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!isAuthenticated()) return;
+
+            const homeTeamId = document.getElementById('home-team').value;
+            const awayTeamId = document.getElementById('away-team').value;
+            const homeScore = parseInt(document.getElementById('home-score').value);
+            const awayScore = parseInt(document.getElementById('away-score').value);
+
+            // Verifica che le squadre siano diverse
+            if (homeTeamId === awayTeamId) {
+                alert('Le squadre devono essere diverse');
+                return;
+            }
+
+            // Raccogli i marcatori
+            const homeScorers = Array.from(document.querySelectorAll('#home-scorers-container select')).map(select => select.value);
+            const awayScorers = Array.from(document.querySelectorAll('#away-scorers-container select')).map(select => select.value);
+
+            // Verifica che il numero di marcatori corrisponda al punteggio
+            if (homeScorers.length !== homeScore || awayScorers.length !== awayScore) {
+                alert('Il numero di marcatori deve corrispondere al punteggio');
+                return;
+            }
+
+            // Aggiorna le statistiche delle squadre
+            const teams = loadData('teams') || [];
+            const homeTeam = teams.find(t => t.id === homeTeamId);
+            const awayTeam = teams.find(t => t.id === awayTeamId);
+
+            if (homeTeam && awayTeam) {
+                // Aggiorna le partite giocate
+                homeTeam.matchesPlayed++;
+                awayTeam.matchesPlayed++;
+
+                // Aggiorna i gol
+                homeTeam.goalsFor += homeScore;
+                homeTeam.goalsAgainst += awayScore;
+                awayTeam.goalsFor += awayScore;
+                awayTeam.goalsAgainst += homeScore;
+
+                // Aggiorna vittorie/pareggi/sconfitte
+                if (homeScore > awayScore) {
+                    homeTeam.wins++;
+                    awayTeam.losses++;
+                } else if (homeScore < awayScore) {
+                    homeTeam.losses++;
+                    awayTeam.wins++;
+                } else {
+                    homeTeam.draws++;
+                    awayTeam.draws++;
+                }
+
+                // Aggiorna i gol dei giocatori
+                homeScorers.forEach(playerId => {
+                    const player = homeTeam.players.find(p => p.id === playerId);
+                    if (player) player.goals = (player.goals || 0) + 1;
+                });
+
+                awayScorers.forEach(playerId => {
+                    const player = awayTeam.players.find(p => p.id === playerId);
+                    if (player) player.goals = (player.goals || 0) + 1;
+                });
+
+                // Salva le modifiche
+                saveData('teams', teams);
+
+                // Reindirizza alla home
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Carica le squadre all'avvio
+        loadTeams();
+    </script>
+</body>
+</html> 

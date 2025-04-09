@@ -3,128 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Risultati - Torneo Festa Madonna</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Torneo Calcio - Risultati</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body class="bg-gray-900 text-white">
-    <header class="fixed w-full bg-gray-800 shadow-lg z-50">
-        <nav class="container mx-auto px-4 py-4">
-            <div class="flex justify-between items-center">
-                <a href="../index.html" class="text-2xl font-bold text-primary">Torneo Festa Madonna</a>
-                <div class="hidden md:flex space-x-6">
-                    <a href="../index.html" class="nav-link">Home</a>
-                    <a href="classifica.html" class="nav-link">Classifica</a>
-                    <a href="marcatori.html" class="nav-link">Marcatori</a>
-                    <a href="risultati.html" class="nav-link active">Risultati</a>
-                </div>
-                <button class="md:hidden text-2xl" id="mobile-menu-button">
-                    <i class="fas fa-bars"></i>
+<body class="bg-gray-900 text-white min-h-screen">
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Risultati</h1>
+            <div class="flex items-center gap-4">
+                <button id="admin-btn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors hidden">
+                    <i class="fas fa-lock mr-2"></i>
+                    Area Amministrativa
+                </button>
+                <button id="logout-btn" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors hidden">
+                    <i class="fas fa-sign-out-alt mr-2"></i>
+                    Logout
                 </button>
             </div>
-        </nav>
-    </header>
+        </div>
 
-    <main class="container mx-auto px-4 pt-24 pb-12">
-        <h1 class="text-4xl font-bold mb-8">Risultati Partite</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gray-800 rounded-lg p-6 text-center">
+                <h3 class="text-xl font-bold mb-2">Partite Giocate</h3>
+                <p id="total-matches" class="text-3xl font-bold text-primary">0</p>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 text-center">
+                <h3 class="text-xl font-bold mb-2">Gol Totali</h3>
+                <p id="total-goals" class="text-3xl font-bold text-primary">0</p>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 text-center">
+                <h3 class="text-xl font-bold mb-2">Media Gol/Partita</h3>
+                <p id="avg-goals" class="text-3xl font-bold text-primary">0</p>
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+            <input type="text" id="search-match" placeholder="Cerca partita..." class="flex-grow px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none">
+            <select id="sort-matches" class="px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none">
+                <option value="date">Ordina per data</option>
+                <option value="goals">Ordina per gol</option>
+            </select>
+        </div>
+
+        <div id="matches-container" class="space-y-6">
+            <!-- Le partite verranno inserite qui dinamicamente -->
+        </div>
+
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-                <h3 class="text-xl font-bold mb-4">Partite Giocate</h3>
-                <p class="text-3xl font-bold text-primary" id="total-matches">12</p>
-                <p class="text-gray-400">su 30 totali</p>
+            <div class="mt-8 flex justify-end">
+                <button id="insert-result-btn" onclick="openResultModal()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors hidden">
+                    <i class="fas fa-plus mr-2"></i>
+                    Inserisci Risultato
+                </button>
             </div>
-            
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-                <h3 class="text-xl font-bold mb-4">Gol Totali</h3>
-                <p class="text-3xl font-bold text-primary" id="total-goals">45</p>
-                <p class="text-gray-400">in 12 partite</p>
-            </div>
-            
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-                <h3 class="text-xl font-bold mb-4">Media Gol</h3>
-                <p class="text-3xl font-bold text-primary" id="avg-goals">3.75</p>
-                <p class="text-gray-400">per partita</p>
-            </div>
-        </div>
-
-        <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-            <div class="p-4 border-b border-gray-700">
-                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                    <div class="flex space-x-4">
-                        <div class="relative">
-                            <input type="date" id="date-filter" 
-                                   class="bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                        </div>
-                        <div class="relative">
-                            <input type="text" id="team-filter" placeholder="Cerca squadra..." 
-                                   class="bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                        </div>
-                    </div>
-                    <div class="flex space-x-4">
-                        <select id="sort-by" class="bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="data">Data</option>
-                            <option value="gol">Gol Totali</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="bg-gray-700">
-                            <th class="px-6 py-3 text-left">Data</th>
-                            <th class="px-6 py-3 text-center">Squadra Casa</th>
-                            <th class="px-6 py-3 text-center">Risultato</th>
-                            <th class="px-6 py-3 text-center">Squadra Ospite</th>
-                            <th class="px-6 py-3 text-center">Marcatori</th>
-                        </tr>
-                    </thead>
-                    <tbody id="risultati-body" class="divide-y divide-gray-700">
-                        <!-- I dati verranno inseriti qui via JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+       
     </main>
 
-    <footer class="bg-gray-800 py-8">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Modal per inserire/modificare un risultato -->
+    <div id="result-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-gray-800 rounded-lg p-6 w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-4" id="result-modal-title">Inserisci Risultato</h2>
+            <form id="result-form" class="space-y-4">
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Link Utili</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="footer-link">Regolamento</a></li>
-                        <li><a href="#" class="footer-link">Calendario</a></li>
-                        <li><a href="#" class="footer-link">Galleria Foto</a></li>
-                    </ul>
+                    <label class="block text-sm font-medium mb-1">Partita</label>
+                    <select name="match" required class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none">
+                        <option value="">Seleziona partita</option>
+                    </select>
                 </div>
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Contatti</h3>
-                    <ul class="space-y-2">
-                        <li><i class="fas fa-phone mr-2"></i> +39 123 456 789</li>
-                        <li><i class="fas fa-envelope mr-2"></i> info@torneofestamadonna.it</li>
-                        <li><i class="fas fa-map-marker-alt mr-2"></i> Via Roma 123, Città</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Seguici</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-2xl hover:text-primary transition-colors"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-2xl hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-2xl hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Gol Casa</label>
+                        <input type="number" name="homeScore" min="0" required class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Gol Ospite</label>
+                        <input type="number" name="awayScore" min="0" required class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none">
                     </div>
                 </div>
-            </div>
-            <div class="mt-8 pt-8 border-t border-gray-700 text-center">
-                <p>&copy; 2024 Torneo Festa Madonna. Tutti i diritti riservati.</p>
-            </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Marcatori</label>
+                    <div id="scorers-container" class="space-y-2">
+                        <!-- I marcatori verranno aggiunti qui dinamicamente -->
+                    </div>
+                    <button type="button" onclick="addScorer()" class="mt-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>
+                        Aggiungi Marcatore
+                    </button>
+                </div>
+                <div class="flex justify-end gap-4">
+                    <button type="button" onclick="closeResultModal()" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                        Annulla
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+                        Salva
+                    </button>
+                </div>
+            </form>
         </div>
-    </footer>
+    </div>
 
-    <script src="../js/main.js"></script>
-    <script src="../js/risultati.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/storage.js"></script>
+    <script>
+        // Gestione autenticazione
+        const adminBtn = document.getElementById('admin-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        if (isAuthenticated()) {
+            adminBtn.classList.add('hidden');
+            logoutBtn.classList.remove('hidden');
+        } else {
+            adminBtn.classList.remove('hidden');
+            logoutBtn.classList.add('hidden');
+        }
+
+        adminBtn.addEventListener('click', () => {
+            window.location.href = 'login.html';
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            logout();
+            window.location.reload();
+        });
+
+        // Funzione per aggiornare i risultati
+        function updateRisultati() {
+            const matches = loadData('matches') || [];
+            const matchesContainer = document.getElementById('matches-container');
+            const matchSelect = document.querySelector('select[name="match"]');
+            const insertResultBtn = document.getElementById('insert-result-btn');
+            
+            // Filtra solo le partite senza risultato
+            const matchesWithoutResult = matches.filter(m => m.homeScore === undefined);
+            const matchOptions = matchesWithoutResult.map(match => 
+                `<option value="${match.id}">${match.homeTeam} vs ${match.awayTeam} (${new Date(match.date).toLocaleDateString()})</option>`
+            ).join('');
+            matchSelect.innerHTML = `<option value="">Seleziona partita</option>${matchOptions}`;
+            
+            // Mostra/nascondi il pulsante Inserisci Risultato in base alla presenza di partite senza risultato
+            if (isAuthenticated()) {
+                if (matchesWithoutResult.length > 0) {
+                    insertResultBtn.classList.remove('hidden');
+                } else {
+                    insertResultBtn.classList.add('hidden');
+                }
+            }
+            
+            // Ordina le partite per data (più recenti prima)
+            const sortedMatches = [...matches].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            matchesContainer.innerHTML = sortedMatches.map(match => `
+                <div class="bg-gray-800 rounded-lg p-6 transform hover:scale-105 transition-transform duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-center flex-1">
+                            <h3 class="text-xl font-bold">${match.homeTeam}</h3>
+                            <p class="text-3xl font-bold text-primary">${match.homeScore || '-'}</p>
+                        </div>
+                        <div class="text-center mx-4">
+                            <p class="text-gray-400">VS</p>
+                            <p class="text-sm text-gray-400">${new Date(match.date).toLocaleDateString()}</p>
+                        </div>
+                        <div class="text-center flex-1">
+                            <h3 class="text-xl font-bold">${match.awayTeam}</h3>
+                            <p class="text-3xl font-bold text-primary">${match.awayScore || '-'}</p>
+                        </div>
+                    </div>
+                    ${match.scorers && match.scorers.length > 0 ? `
+                        <div class="mt-4 text-center">
+                            <p class="text-gray-400">Marcatori:</p>
+                            <p class="text-sm">${match.scorers.map(scorer => `${scorer.player} (${scorer.number})`).join(', ')}</p>
+                        </div>
+                    ` : ''}
+                    ${isAuthenticated() && match.homeScore === undefined ? `
+                        <div class="mt-4 flex justify-end">
+                            <button onclick="editResult('${match.id}')" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+                                Inserisci Risultato
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+
+            // Aggiorna le statistiche
+            const totalMatches = matches.length;
+            const playedMatches = matches.filter(m => m.homeScore !== undefined).length;
+            const totalGoals = matches.reduce((acc, match) => 
+                acc + (match.homeScore || 0) + (match.awayScore || 0), 0
+            );
+            
+            document.getElementById('total-matches').textContent = totalMatches;
+            document.getElementById('total-goals').textContent = totalGoals;
+            document.getElementById('avg-goals').textContent = playedMatches > 0 ? (totalGoals / playedMatches).toFixed(1) : '0';
+        }
+
+        // Funzioni per gestire il modal dei risultati
+        function openResultModal(matchId = null) {
+            const modal = document.getElementById('result-modal');
+            const form = document.getElementById('result-form');
+            const title = document.getElementById('result-modal-title');
+            const matchSelect = form.querySelector('select[name="match"]');
+            
+            // Carica le partite dal calendario
+            const matches = loadData('matches') || [];
+            const matchesWithoutResult = matches.filter(m => m.homeScore === undefined);
+            
+            // Aggiorna le opzioni del select con le partite senza risultato
+            matchSelect.innerHTML = `
+                <option value="">Seleziona partita</option>
+                ${matchesWithoutResult.map(match => 
+                    `<option value="${match.id}" ${matchId === match.id ? 'selected' : ''}>
+                        ${match.homeTeam} vs ${match.awayTeam} (${new Date(match.date).toLocaleDateString()})
+                    </option>`
+                ).join('')}
+            `;
+            
+            if (matchId) {
+                title.textContent = 'Modifica Risultato';
+                const match = matches.find(m => m.id === matchId);
+                if (match) {
+                    form.homeScore.value = match.homeScore || '';
+                    form.awayScore.value = match.awayScore || '';
+                    updateScorers(match.scorers || []);
+                }
+            } else {
+                title.textContent = 'Inserisci Risultato';
+                form.reset();
+                updateScorers([]);
+            }
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeResultModal() {
+            document.getElementById('result-modal').classList.add('hidden');
+        }
+
+        // Funzioni per gestire i marcatori
+        function addScorer() {
+            const container = document.getElementById('scorers-container');
+            const teams = loadData('teams') || [];
+            const matchSelect = document.querySelector('select[name="match"]');
+            const matchId = matchSelect.value;
+            
+            if (!matchId) {
+                alert('Seleziona prima una partita');
+                return;
+            }
+            
+            const matches = loadData('matches') || [];
+            const match = matches.find(m => m.id === matchId);
+            if (!match) return;
+            
+            const homeTeam = teams.find(t => t.id === match.homeTeamId);
+            const awayTeam = teams.find(t => t.id === match.awayTeamId);
+            
+            const scorerDiv = document.createElement('div');
+            scorerDiv.className = 'flex gap-2';
+            scorerDiv.innerHTML = `
+                <select name="team" class="flex-1 px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none">
+                    <option value="${homeTeam.id}">${homeTeam.name}</option>
+                    <option value="${awayTeam.id}">${awayTeam.name}</option>
+                </select>
+                <select name="player" class="flex-1 px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none">
+                    <option value="">Seleziona giocatore</option>
+                </select>
+                <button type="button" onclick="this.parentElement.remove()" class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(scorerDiv);
+            updatePlayerSelect(scorerDiv.querySelector('select[name="player"]'), homeTeam);
+        }
+
+        function updatePlayerSelect(select, team) {
+            const players = team.players || [];
+            select.innerHTML = `
+                <option value="">Seleziona giocatore</option>
+                ${players.map(player => `<option value="${player.id}" data-number="${player.number}">${player.name} (${player.number})</option>`).join('')}
+            `;
+        }
+
+        function updateScorers(scorers) {
+            const container = document.getElementById('scorers-container');
+            container.innerHTML = '';
+            scorers.forEach(() => addScorer());
+        }
+
+        function editResult(matchId) {
+            openResultModal(matchId);
+        }
+
+        // Gestione del form dei risultati
+        document.getElementById('result-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const matches = loadData('matches') || [];
+            const matchId = form.match.value;
+            
+            const scorers = Array.from(form.querySelectorAll('#scorers-container > div')).map(div => {
+                const playerSelect = div.querySelector('select[name="player"]');
+                const selectedOption = playerSelect.options[playerSelect.selectedIndex];
+                return {
+                    team: div.querySelector('select[name="team"]').value,
+                    player: selectedOption.text.split(' (')[0], // Prende solo il nome del giocatore
+                    number: selectedOption.dataset.number // Aggiunge il numero di maglia
+                };
+            });
+            
+            const matchIndex = matches.findIndex(m => m.id === matchId);
+            if (matchIndex !== -1) {
+                matches[matchIndex] = {
+                    ...matches[matchIndex],
+                    homeScore: parseInt(form.homeScore.value),
+                    awayScore: parseInt(form.awayScore.value),
+                    scorers: scorers
+                };
+                
+                saveData('matches', matches);
+                closeResultModal();
+                updateRisultati();
+            }
+        });
+
+        // Inizializzazione
+        updateRisultati();
+    </script>
 </body>
-</html> 
+</html>

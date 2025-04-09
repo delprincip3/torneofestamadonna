@@ -3,150 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classifica - Torneo di Calcio a 7</title>
+    <title>Torneo Calcio - Classifica</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body class="bg-gradient-to-br from-gray-900 to-blue-900 text-white">
-    <!-- Header -->
-    <header class="fixed w-full bg-black bg-opacity-80 backdrop-blur-sm z-50">
-        <nav class="container mx-auto px-4 py-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-4">
-                    <a href="../index.html" class="text-2xl font-bold text-white hover:text-blue-400 transition-colors">
-                        <i class="fas fa-futbol mr-2"></i>Torneo Calcio 7
-                    </a>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="../index.html" class="nav-link">Home</a>
-                    <a href="classifica.html" class="nav-link active">Classifica</a>
-                    <a href="marcatori.html" class="nav-link">Marcatori</a>
-                    <a href="risultati.html" class="nav-link">Risultati</a>
-                    <a href="calendario.html" class="nav-link">Calendario</a>
-                    <a href="squadre.html" class="nav-link">Squadre</a>
-                </div>
-                <button class="md:hidden text-white" id="menu-toggle">
-                    <i class="fas fa-bars text-2xl"></i>
+<body class="bg-gray-900 text-white min-h-screen">
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Classifica</h1>
+            <div class="flex items-center gap-4">
+                <button id="admin-btn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors hidden">
+                    <i class="fas fa-lock mr-2"></i>
+                    Area Amministrativa
+                </button>
+                <button id="logout-btn" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors hidden">
+                    <i class="fas fa-sign-out-alt mr-2"></i>
+                    Logout
                 </button>
             </div>
-        </nav>
-    </header>
+        </div>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-24">
-        <div class="max-w-6xl mx-auto">
-            <h1 class="text-4xl font-bold mb-8">Classifica</h1>
-            
-            <!-- Filtri e Ricerca -->
-            <div class="bg-gray-800 rounded-lg p-4 mb-8">
-                <div class="flex flex-wrap gap-4">
-                    <div class="flex-1 min-w-[200px]">
-                        <div class="relative">
-                            <input type="text" id="search-team" 
-                                   class="w-full bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" 
-                                   placeholder="Cerca squadra...">
-                            <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
-                        </div>
-                    </div>
-                    <div class="flex-1 min-w-[200px]">
-                        <select id="sort-by" class="w-full bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                            <option value="posizione">Posizione</option>
-                            <option value="punti">Punti</option>
-                            <option value="golFatti">Gol Fatti</option>
-                            <option value="golSubiti">Gol Subiti</option>
-                        </select>
-                    </div>
-                </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gray-800 rounded-lg p-6 text-center">
+                <h3 class="text-xl font-bold mb-2">Squadre</h3>
+                <p id="total-teams" class="text-3xl font-bold text-primary">0</p>
             </div>
+            <div class="bg-gray-800 rounded-lg p-6 text-center">
+                <h3 class="text-xl font-bold mb-2">Partite Giocate</h3>
+                <p id="total-matches" class="text-3xl font-bold text-primary">0</p>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-6 text-center">
+                <h3 class="text-xl font-bold mb-2">Gol Totali</h3>
+                <p id="total-goals" class="text-3xl font-bold text-primary">0</p>
+            </div>
+        </div>
 
-            <!-- Tabella Classifica -->
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Pos</th>
-                            <th>Squadra</th>
-                            <th>P</th>
-                            <th>PG</th>
-                            <th>V</th>
-                            <th>P</th>
-                            <th>S</th>
-                            <th>GF</th>
-                            <th>GS</th>
-                            <th>DR</th>
-                        </tr>
-                    </thead>
-                    <tbody id="classifica-body">
-                        <!-- I dati verranno inseriti qui via JavaScript -->
-                    </tbody>
-                </table>
-            </div>
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+            <input type="text" id="search-team" placeholder="Cerca squadra..." class="flex-grow px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none">
+            <select id="sort-teams" class="px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none">
+                <option value="points">Ordina per punti</option>
+                <option value="goals">Ordina per gol</option>
+                <option value="wins">Ordina per vittorie</option>
+            </select>
+        </div>
 
-            <!-- Statistiche -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                <div class="stats-card">
-                    <div class="stats-value" id="total-goals">0</div>
-                    <div class="stats-label">Gol Totali</div>
-                </div>
-                <div class="stats-card">
-                    <div class="stats-value" id="avg-goals">0</div>
-                    <div class="stats-label">Media Gol per Partita</div>
-                </div>
-                <div class="stats-card">
-                    <div class="stats-value" id="total-matches">0</div>
-                    <div class="stats-label">Partite Giocate</div>
-                </div>
-            </div>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-800">
+                        <th class="px-6 py-3 text-left">Pos.</th>
+                        <th class="px-6 py-3 text-left">Squadra</th>
+                        <th class="px-6 py-3 text-center">P</th>
+                        <th class="px-6 py-3 text-center">V</th>
+                        <th class="px-6 py-3 text-center">N</th>
+                        <th class="px-6 py-3 text-center">P</th>
+                        <th class="px-6 py-3 text-center">GF</th>
+                        <th class="px-6 py-3 text-center">GS</th>
+                        <th class="px-6 py-3 text-center">DR</th>
+                        <th class="px-6 py-3 text-center">Punti</th>
+                    </tr>
+                </thead>
+                <tbody id="teams-table">
+                    <!-- Le squadre verranno inserite qui dinamicamente -->
+                </tbody>
+            </table>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-black py-12 mt-12">
+    <footer class="bg-gray-800 text-white py-8 mt-12">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Torneo Calcio 7</h3>
-                    <p class="text-gray-400">Il torneo più emozionante della stagione</p>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
                     <h3 class="text-xl font-bold mb-4">Link Utili</h3>
                     <ul class="space-y-2">
-                        <li><a href="classifica.html" class="footer-link">Classifica</a></li>
-                        <li><a href="marcatori.html" class="footer-link">Marcatori</a></li>
-                        <li><a href="risultati.html" class="footer-link">Risultati</a></li>
-                        <li><a href="calendario.html" class="footer-link">Calendario</a></li>
+                        <li><a href="#" class="hover:text-primary">Regolamento</a></li>
+                        <li><a href="#" class="hover:text-primary">FAQ</a></li>
+                        <li><a href="#" class="hover:text-primary">Contatti</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-xl font-bold mb-4">Contatti</h3>
                     <ul class="space-y-2">
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-2"></i>
-                            <a href="mailto:info@torneocalcio7.it" class="footer-link">info@torneocalcio7.it</a>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone mr-2"></i>
-                            <a href="tel:+39123456789" class="footer-link">+39 123 456 789</a>
-                        </li>
+                        <li><i class="fas fa-envelope mr-2"></i> info@torneocalcio.it</li>
+                        <li><i class="fas fa-phone mr-2"></i> +39 123 456 7890</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> Via del Torneo, 123</li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-xl font-bold mb-4">Seguici</h3>
                     <div class="flex space-x-4">
-                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-primary"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-primary"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-primary"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>© 2024 Torneo di Calcio a 7. Tutti i diritti riservati.</p>
+            <div class="mt-8 text-center text-gray-400">
+                <p>&copy; 2024 Torneo Calcio. Tutti i diritti riservati.</p>
             </div>
         </div>
     </footer>
 
-    <script src="../js/main.js"></script>
-    <script src="../js/classifica.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/storage.js"></script>
+    <script>
+        // Gestione autenticazione
+        const adminBtn = document.getElementById('admin-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        if (isAuthenticated()) {
+            adminBtn.classList.add('hidden');
+            logoutBtn.classList.remove('hidden');
+        } else {
+            adminBtn.classList.remove('hidden');
+            logoutBtn.classList.add('hidden');
+        }
+
+        adminBtn.addEventListener('click', () => {
+            window.location.href = 'login.html';
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            logout();
+            window.location.reload();
+        });
+
+        // Funzione per aggiornare la classifica
+        function updateClassifica() {
+            const teams = loadData('teams') || [];
+            const teamsTable = document.getElementById('teams-table');
+            
+            // Ordina le squadre per punti (3 per vittoria, 1 per pareggio)
+            const sortedTeams = [...teams].sort((a, b) => {
+                const puntiA = (a.wins || 0) * 3 + (a.draws || 0);
+                const puntiB = (b.wins || 0) * 3 + (b.draws || 0);
+                return puntiB - puntiA;
+            });
+
+            teamsTable.innerHTML = sortedTeams.map((team, index) => `
+                <tr class="hover:bg-gray-800">
+                    <td class="px-4 py-2">${index + 1}</td>
+                    <td class="px-4 py-2">${team.name}</td>
+                    <td class="px-4 py-2">${team.matchesPlayed || 0}</td>
+                    <td class="px-4 py-2">${team.wins || 0}</td>
+                    <td class="px-4 py-2">${team.draws || 0}</td>
+                    <td class="px-4 py-2">${team.losses || 0}</td>
+                    <td class="px-4 py-2">${team.goalsFor || 0}</td>
+                    <td class="px-4 py-2">${team.goalsAgainst || 0}</td>
+                    <td class="px-4 py-2">${(team.goalsFor || 0) - (team.goalsAgainst || 0)}</td>
+                    <td class="px-4 py-2">${(team.wins || 0) * 3 + (team.draws || 0)}</td>
+                </tr>
+            `).join('');
+
+            // Aggiorna le statistiche
+            const totalTeams = teams.length;
+            const totalMatches = teams.reduce((acc, team) => acc + (team.matchesPlayed || 0), 0);
+            const totalGoals = teams.reduce((acc, team) => acc + (team.goalsFor || 0), 0);
+            
+            document.getElementById('total-teams').textContent = totalTeams;
+            document.getElementById('total-matches').textContent = totalMatches;
+            document.getElementById('total-goals').textContent = totalGoals;
+        }
+
+        // Inizializzazione
+        updateClassifica();
+    </script>
 </body>
 </html> 

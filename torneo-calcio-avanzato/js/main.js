@@ -1,5 +1,51 @@
+// Funzione per creare l'header dinamico
+function createDynamicHeader() {
+    const header = document.createElement('header');
+    header.className = 'bg-gray-800 text-white py-4 fixed w-full top-0 z-50';
+    
+    // Ottieni il percorso base corretto
+    const isInPages = window.location.pathname.includes('/pages/');
+    const basePath = isInPages ? '../' : './';
+    
+    header.innerHTML = `
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <a href="${basePath}index.html" class="text-2xl font-bold text-primary">Torneo Calcio</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-button" class="md:hidden text-white hover:text-primary transition-colors">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                    <nav class="hidden md:flex space-x-6">
+                        <a href="${basePath}index.html" class="nav-link">Home</a>
+                        <a href="${basePath}pages/classifica.html" class="nav-link">Classifica</a>
+                        <a href="${basePath}pages/marcatori.html" class="nav-link">Marcatori</a>
+                        <a href="${basePath}pages/risultati.html" class="nav-link">Risultati</a>
+                        <a href="${basePath}pages/calendario.html" class="nav-link">Calendario</a>
+                        <a href="${basePath}pages/squadre.html" class="nav-link">Squadre</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Sostituisci l'header esistente con quello nuovo
+    const existingHeader = document.querySelector('header');
+    if (existingHeader) {
+        existingHeader.replaceWith(header);
+    } else {
+        document.body.insertBefore(header, document.body.firstChild);
+    }
+    
+    return header;
+}
+
 // Gestione del menu mobile
 document.addEventListener('DOMContentLoaded', () => {
+    // Crea l'header dinamico
+    const header = createDynamicHeader();
+    
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     
     // Verifica se l'elemento esiste prima di procedere
@@ -11,15 +57,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenu = document.createElement('div');
     mobileMenu.className = 'fixed top-16 left-0 w-full bg-gray-800 shadow-lg transform -translate-y-full transition-transform duration-300 ease-in-out z-40';
     
+    // Ottieni il percorso base corretto
+    const isInPages = window.location.pathname.includes('/pages/');
+    const basePath = isInPages ? '../' : './';
+    
     mobileMenu.innerHTML = `
         <div class="container mx-auto px-4 py-4">
             <div class="flex flex-col space-y-4">
-                <a href="../index.html" class="nav-link">Home</a>
-                <a href="classifica.html" class="nav-link">Classifica</a>
-                <a href="marcatori.html" class="nav-link">Marcatori</a>
-                <a href="risultati.html" class="nav-link">Risultati</a>
-                <a href="calendario.html" class="nav-link">Calendario</a>
-                <a href="squadre.html" class="nav-link">Squadre</a>
+                <a href="${basePath}index.html" class="nav-link">Home</a>
+                <a href="${basePath}pages/classifica.html" class="nav-link">Classifica</a>
+                <a href="${basePath}pages/marcatori.html" class="nav-link">Marcatori</a>
+                <a href="${basePath}pages/risultati.html" class="nav-link">Risultati</a>
+                <a href="${basePath}pages/calendario.html" class="nav-link">Calendario</a>
+                <a href="${basePath}pages/squadre.html" class="nav-link">Squadre</a>
             </div>
         </div>
     `;

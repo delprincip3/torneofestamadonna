@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torneo Calcio - Dettaglio Squadra</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <main class="container mx-auto px-4 py-20">
+        <div class="flex items-center mb-8">
+            <a href="squadre.html" class="text-primary hover:text-primary-light mr-4">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1 id="squadra-nome" class="text-4xl font-bold">Nome Squadra</h1>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <img id="squadra-logo" src="" alt="Logo Squadra" class="w-32 h-32 mx-auto mb-4">
+                <p id="squadra-descrizione" class="text-gray-300"></p>
+            </div>
+            
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-bold mb-4">Statistiche Squadra</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <p class="text-gray-400">Gol Totali</p>
+                        <p id="gol-totali" class="text-2xl font-bold text-primary">0</p>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <p class="text-gray-400">Media Gol</p>
+                        <p id="media-gol" class="text-2xl font-bold text-primary">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg p-6">
+            <h2 class="text-2xl font-bold mb-6">Marcatori</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-gray-700">
+                            <th class="px-4 py-3 text-left">Giocatore</th>
+                            <th class="px-4 py-3 text-center">Gol</th>
+                        </tr>
+                    </thead>
+                    <tbody id="giocatori-body">
+                        <!-- I dati verranno inseriti qui dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Link Utili</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-primary">Regolamento</a></li>
+                        <li><a href="#" class="hover:text-primary">FAQ</a></li>
+                        <li><a href="#" class="hover:text-primary">Contatti</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contatti</h3>
+                    <ul class="space-y-2">
+                        <li><i class="fas fa-envelope mr-2"></i> info@torneocalcio.it</li>
+                        <li><i class="fas fa-phone mr-2"></i> +39 123 456 7890</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> Via del Torneo, 123</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Seguici</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl hover:text-primary"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-primary"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-primary"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-gray-400">
+                <p>&copy; 2024 Torneo Calcio. Tutti i diritti riservati.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/squadre.js"></script>
+    <script src="../js/squadra-dettaglio.js"></script>
+</body>
+</html> 
