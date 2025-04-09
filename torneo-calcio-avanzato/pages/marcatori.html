@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcatori - Torneo Festa Madonna</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <header class="fixed w-full bg-gray-800 shadow-lg z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="../index.html" class="text-2xl font-bold text-primary">Torneo Festa Madonna</a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="../index.html" class="nav-link">Home</a>
+                    <a href="classifica.html" class="nav-link">Classifica</a>
+                    <a href="marcatori.html" class="nav-link active">Marcatori</a>
+                    <a href="risultati.html" class="nav-link">Risultati</a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white hover:text-primary transition-colors">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 pt-24 pb-12">
+        <h1 class="text-4xl font-bold mb-8">Classifica Marcatori</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Capocannoniere</h3>
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-2xl font-bold">1</div>
+                    <div>
+                        <p class="text-lg font-medium" id="top-scorer">Mario Rossi</p>
+                        <p class="text-gray-400" id="top-scorer-goals">15 gol</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Gol Totali</h3>
+                <p class="text-3xl font-bold text-primary" id="total-goals">120</p>
+                <p class="text-gray-400">in 30 partite</p>
+            </div>
+            
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Media Gol</h3>
+                <p class="text-3xl font-bold text-primary" id="avg-goals">4.0</p>
+                <p class="text-gray-400">per partita</p>
+            </div>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-4 border-b border-gray-700">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <div class="relative w-full md:w-64">
+                        <input type="text" id="search-player" placeholder="Cerca giocatore..." 
+                               class="w-full bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                    </div>
+                    <div class="flex space-x-4">
+                        <select id="sort-by" class="bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="gol">Gol</option>
+                            <option value="partite">Partite</option>
+                            <option value="media">Media Gol</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-gray-700">
+                            <th class="px-6 py-3 text-left">Pos</th>
+                            <th class="px-6 py-3 text-left">Giocatore</th>
+                            <th class="px-6 py-3 text-center">Squadra</th>
+                            <th class="px-6 py-3 text-center">Gol</th>
+                            <th class="px-6 py-3 text-center">Partite</th>
+                            <th class="px-6 py-3 text-center">Media</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marcatori-body" class="divide-y divide-gray-700">
+                        <!-- I dati verranno inseriti qui via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Link Utili</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link">Regolamento</a></li>
+                        <li><a href="#" class="footer-link">Calendario</a></li>
+                        <li><a href="#" class="footer-link">Galleria Foto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contatti</h3>
+                    <ul class="space-y-2">
+                        <li><i class="fas fa-phone mr-2"></i> +39 123 456 789</li>
+                        <li><i class="fas fa-envelope mr-2"></i> info@torneofestamadonna.it</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> Via Roma 123, Città</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Seguici</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl hover:text-primary transition-colors"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+                <p>&copy; 2024 Torneo Festa Madonna. Tutti i diritti riservati.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/marcatori.js"></script>
+</body>
+</html> 

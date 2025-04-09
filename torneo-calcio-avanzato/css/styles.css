@@ -1,0 +1,12 @@
+/* Stili per il menu mobile */
+@media (max-width: 768px) {
+    .nav-link {
+        @apply block py-2 px-4 text-lg hover:bg-gray-700 rounded-lg transition-colors duration-300;
+    }
+    
+    .nav-link.active {
+        @apply bg-primary text-white;
+    }
+}
+
+/* ... existing code ... */ 

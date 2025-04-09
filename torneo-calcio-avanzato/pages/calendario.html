@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario - Torneo Festa Madonna</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <header class="fixed w-full bg-gray-800 shadow-lg z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="../index.html" class="text-2xl font-bold text-primary">Torneo Festa Madonna</a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="../index.html" class="nav-link">Home</a>
+                    <a href="classifica.html" class="nav-link">Classifica</a>
+                    <a href="marcatori.html" class="nav-link">Marcatori</a>
+                    <a href="risultati.html" class="nav-link">Risultati</a>
+                    <a href="calendario.html" class="nav-link active">Calendario</a>
+                    <a href="squadre.html" class="nav-link">Squadre</a>
+                </div>
+                <button class="md:hidden text-2xl" id="mobile-menu-button">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 pt-24 pb-12">
+        <h1 class="text-4xl font-bold mb-8">Calendario Partite</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Prossima Partita</h3>
+                <div class="flex items-center justify-between">
+                    <div class="text-center">
+                        <p class="text-lg font-medium">Real Madrid</p>
+                        <p class="text-gray-400">vs</p>
+                        <p class="text-lg font-medium">Barcelona</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-primary">20:30</p>
+                        <p class="text-gray-400">15 Marzo 2024</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Partite Giocate</h3>
+                <p class="text-3xl font-bold text-primary" id="played-matches">12</p>
+                <p class="text-gray-400">su 30 totali</p>
+            </div>
+            
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold mb-4">Giornate Rimaste</h3>
+                <p class="text-3xl font-bold text-primary" id="remaining-matches">18</p>
+                <p class="text-gray-400">da disputare</p>
+            </div>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-4 border-b border-gray-700">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <div class="flex space-x-4">
+                        <div class="relative">
+                            <input type="date" id="date-filter" 
+                                   class="bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div class="relative">
+                            <input type="text" id="team-filter" placeholder="Cerca squadra..." 
+                                   class="bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <select id="sort-by" class="bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="data">Data</option>
+                            <option value="squadra">Squadra</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-gray-700">
+                            <th class="px-6 py-3 text-left">Data</th>
+                            <th class="px-6 py-3 text-center">Ora</th>
+                            <th class="px-6 py-3 text-center">Squadra Casa</th>
+                            <th class="px-6 py-3 text-center">Squadra Ospite</th>
+                            <th class="px-6 py-3 text-center">Campo</th>
+                            <th class="px-6 py-3 text-center">Stato</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendario-body" class="divide-y divide-gray-700">
+                        <!-- I dati verranno inseriti qui via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Link Utili</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link">Regolamento</a></li>
+                        <li><a href="#" class="footer-link">Calendario</a></li>
+                        <li><a href="#" class="footer-link">Galleria Foto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contatti</h3>
+                    <ul class="space-y-2">
+                        <li><i class="fas fa-phone mr-2"></i> +39 123 456 789</li>
+                        <li><i class="fas fa-envelope mr-2"></i> info@torneofestamadonna.it</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> Via Roma 123, Città</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Seguici</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl hover:text-primary transition-colors"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+                <p>&copy; 2024 Torneo Festa Madonna. Tutti i diritti riservati.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/calendario.js"></script>
+</body>
+</html> 
